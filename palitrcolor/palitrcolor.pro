@@ -12,12 +12,14 @@ SOURCES += \
     color.cpp \
     main.cpp \
     mainwindow.cpp \
-    palitr.cpp
+    palitr.cpp \
+    user.cpp
 
 HEADERS += \
     color.h \
     mainwindow.h \
-    palitr.h
+    palitr.h \
+    user.h
 
 FORMS += \
     mainwindow.ui
