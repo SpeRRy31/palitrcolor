@@ -1,0 +1,96 @@
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+*.slo
+*.lo
+*.o
+*.obj
+*.a
+*.lib
+*.dll
+*.so
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Qt-specific
+Makefile
+moc_*.cpp
+moc_*.h
+ui_*.h
+qrc_*.cpp
+
+# Qt Creator files
+*.user
+*.pro.user
+*.pro.user.*
+*.autosave
+
+# Compiled Qt translations
+*.qm
+
+# Compiled Qt JAM files
+*.jam
+
+# Generated code
+ui_*.h
+moc_*.cpp
+moc_*.h
+qrc_*.cpp
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+CMakeScripts/
+Testing/
+Makefile
+cmake_install.cmake
+install_manifest.txt
+
+# MySQL
+CMakeLists.txt.user
+CMakeFiles/
+
+# QtCreator
+*.autosave
+
+# macOS
+.DS_Store
+
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+*.slo
+*.lo
+*.o
+*.obj
+*.a
+*.lib
+*.dll
+*.so
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Compiled Dynamic libs (Shared Objects)
+*.so
+
+# Compiled Static libs
+*.lai
+*.la
+*.lai
+*.la
+
+# Compiled metadata
+*.idb
+
+# QtCreator
+*.autosave
+
+# User-specific files
+*.user
+*.user.*
+*.pro.user
+*.pro.user.*
