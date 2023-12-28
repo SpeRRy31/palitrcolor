@@ -10,10 +10,330 @@
     <height>600</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>800</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>800</width>
+    <height>600</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>781</width>
+      <height>58</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_6">
+       <item>
+        <widget class="QLabel" name="accountlbl">
+         <property name="text">
+          <string>акаунт</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="regbtn">
+         <property name="text">
+          <string>увійти</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <widget class="QPushButton" name="savebtn">
+         <property name="text">
+          <string>зберегти</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="loadbtn">
+         <property name="text">
+          <string>заванажити</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>110</y>
+      <width>761</width>
+      <height>410</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <layout class="QVBoxLayout" name="colorbox">
+         <item>
+          <widget class="QLabel" name="colorlb_1">
+           <property name="minimumSize">
+            <size>
+             <width>140</width>
+             <height>300</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>140</width>
+             <height>300</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="codelbl_1">
+           <property name="text">
+            <string>code</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="namelbl_1">
+           <property name="text">
+            <string>color</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="chosBtn_1">
+           <property name="text">
+            <string>вибрати</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="createBtn_1">
+           <property name="text">
+            <string>створити</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="colorbox_2">
+         <item>
+          <widget class="QLabel" name="colorlbl_2">
+           <property name="minimumSize">
+            <size>
+             <width>140</width>
+             <height>300</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>140</width>
+             <height>300</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="codelbl_2">
+           <property name="text">
+            <string>code</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="namelbl_2">
+           <property name="text">
+            <string>color</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="chosBtn_2">
+           <property name="text">
+            <string>вибрати</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="createBtn_2">
+           <property name="text">
+            <string>створити</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="colorbox_3">
+         <item>
+          <widget class="QLabel" name="colorlbl_3">
+           <property name="minimumSize">
+            <size>
+             <width>140</width>
+             <height>300</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>140</width>
+             <height>300</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="codelbl_3">
+           <property name="text">
+            <string>code</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="namelbl_3">
+           <property name="text">
+            <string>color</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="chosBtn_3">
+           <property name="text">
+            <string>вибрати</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="createBtn_3">
+           <property name="text">
+            <string>створити</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="colorbox_4">
+         <item>
+          <widget class="QLabel" name="colorlbl_4">
+           <property name="minimumSize">
+            <size>
+             <width>140</width>
+             <height>300</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>140</width>
+             <height>300</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="codelbl_4">
+           <property name="text">
+            <string>code</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="namelbl_4">
+           <property name="text">
+            <string>color</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="chosBtn_4">
+           <property name="text">
+            <string>вибрати</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="createBtn_4">
+           <property name="text">
+            <string>створити</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </widget>
+  </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>

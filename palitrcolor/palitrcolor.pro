@@ -10,19 +10,31 @@ CONFIG += c++17
 
 SOURCES += \
     color.cpp \
+    createcolordialog.cpp \
+    logindialog.cpp \
     main.cpp \
     mainwindow.cpp \
+    palettelist.cpp \
     palitr.cpp \
+    showcolordialog.cpp \
     user.cpp
 
 HEADERS += \
     color.h \
+    createcolordialog.h \
+    logindialog.h \
     mainwindow.h \
+    palettelist.h \
     palitr.h \
+    showcolordialog.h \
     user.h
 
 FORMS += \
-    mainwindow.ui
+    createcolordialog.ui \
+    logindialog.ui \
+    mainwindow.ui \
+    palettelist.ui \
+    showcolordialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
