@@ -13,9 +13,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     createColor = new CreateColorDialog;
     showColor = new ShowColorDialog;
+
+    loginDialog = new LoginDialog;
+
     connect(createColor, &CreateColorDialog::createdColor, this, &MainWindow::on_createdColor);
     connect(createColor, &CreateColorDialog::createdColor, showColor, &ShowColorDialog::on_createdColor);
     connect(showColor, &ShowColorDialog::chosColor, this, &MainWindow::on_createdColor);
+
 
 }
 
@@ -103,5 +107,11 @@ void MainWindow::on_createdColor(Color *color)
     default:
         QMessageBox::critical(this, "помилка", "cталась технічна помилка спробуйте створити колір");
     }
+}
+
+
+void MainWindow::on_regbtn_clicked()
+{
+    loginDialog->exec();
 }
 

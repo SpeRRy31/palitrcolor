@@ -3,6 +3,8 @@
 
 #include <QDialog>
 
+#include "user.h"
+
 namespace Ui {
 class LoginDialog;
 }
@@ -15,8 +17,19 @@ public:
     explicit LoginDialog(QWidget *parent = nullptr);
     ~LoginDialog();
 
+signals:
+    void loginAccount(User *user);
+private slots:
+    void on_pushButton_2_clicked();
+
+    void on_login_btn_clicked();
+
+    void on_pushButton_clicked();
+
 private:
     Ui::LoginDialog *ui;
+
+    User *user;
 };
 
 #endif // LOGINDIALOG_H

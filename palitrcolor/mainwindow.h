@@ -7,6 +7,8 @@
 #include "createcolordialog.h"
 #include "showcolordialog.h"
 
+#include "logindialog.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -35,6 +37,8 @@ private slots:
 
     void on_createdColor(Color *color);
 
+    void on_regbtn_clicked();
+
 private:
     Ui::MainWindow *ui;
 
@@ -43,9 +47,11 @@ private:
     CreateColorDialog *createColor;
     ShowColorDialog *showColor;
 
+    LoginDialog *loginDialog;
+
     void openCreateColor();
-    void openShowColor();
 
     int changed;
+
 };
 #endif // MAINWINDOW_H

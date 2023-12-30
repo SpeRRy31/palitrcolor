@@ -8,6 +8,7 @@ class Color
     QString name;
     QString code;
 public:
+    Color() : name(""), code("") {}
     Color(QString name, QString code);
 
     QString getName();
