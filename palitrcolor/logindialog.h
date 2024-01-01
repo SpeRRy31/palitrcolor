@@ -29,6 +29,8 @@ private slots:
 private:
     Ui::LoginDialog *ui;
 
+    bool sign = false;
+    User *user_temp;
     User *user;
 };
 

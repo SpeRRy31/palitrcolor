@@ -3,22 +3,37 @@
 
 #include <QColor>
 #include <QMessageBox>
+#include <QDebug>
 
-MainWindow::MainWindow(QWidget *parent)
+
+#include "dbmanager.h"
+#include "sqllitedbmanager.h"
+
+MainWindow::MainWindow(DBManager* dbManager, QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+    , ui(new Ui::MainWindow), dbManager(dbManager)
 {
     ui->setupUi(this);
 
 
     createColor = new CreateColorDialog;
     showColor = new ShowColorDialog;
-
+    about = new AboutDialog;
     loginDialog = new LoginDialog;
+    paletteList = new PaletteList;
 
     connect(createColor, &CreateColorDialog::createdColor, this, &MainWindow::on_createdColor);
     connect(createColor, &CreateColorDialog::createdColor, showColor, &ShowColorDialog::on_createdColor);
     connect(showColor, &ShowColorDialog::chosColor, this, &MainWindow::on_createdColor);
+    connect(this, &MainWindow::createdPallete, paletteList, &PaletteList::on_createdPalette);
+    connect(loginDialog, &LoginDialog::loginAccount, this, &MainWindow::on_login);
+    connect(paletteList, &PaletteList::paletteLoad, this, &MainWindow::on_pallete_load);
+
+
+    ui->colorlb_1->setStyleSheet(QString("background-color: #c1c1c1"));
+    ui->colorlbl_2->setStyleSheet(QString("background-color: #c1c1c1"));
+    ui->colorlbl_3->setStyleSheet(QString("background-color: #c1c1c1"));
+    ui->colorlbl_4->setStyleSheet(QString("background-color: #c1c1c1"));
 
 
 }
@@ -107,11 +122,92 @@ void MainWindow::on_createdColor(Color *color)
     default:
         QMessageBox::critical(this, "помилка", "cталась технічна помилка спробуйте створити колір");
     }
+
+    colorArray[changed-1].setCode(color->getCode());
+    colorArray[changed-1].setName(color->getName());
+    qDebug() << "колір створено " << changed-1 << " "<<changed;
+    qDebug() << colorArray[changed-1].colorToString();
 }
 
 
 void MainWindow::on_regbtn_clicked()
 {
     loginDialog->exec();
+}
+
+void MainWindow::on_login(User *user){
+    current_user = new User(user->getLogin(), user->getPassword());
+    login = true;
+    ui->accountlbl->setText(current_user->getLogin());    ui->regbtn->setText("змінити акаунт");
+}
+
+
+void MainWindow::on_pushButton_clicked()
+{
+    this->close();
+}
+
+
+void MainWindow::on_loadbtn_clicked()
+{
+    if (login){
+        paletteList->exec();
+    }else{
+            QMessageBox::information(this, "помилка", "щоб завантажити палітру потрібно зареєструватись.");
+        }
+}
+
+
+void MainWindow::on_savebtn_clicked()
+{
+
+    if (login){
+        if (!ui->palletename->text().isEmpty()){
+            palette = new Palitr(ui->palletename->text(), colorArray, current_user);
+            qDebug() << palette->getColor(0).colorToString() << " "
+                     << palette->getColor(1).colorToString() << " "
+                     << palette->getColor(2).colorToString() << " "
+                     << palette->getColor(3).colorToString();
+            emit createdPallete(palette);
+        }else{
+            QMessageBox::critical(this, "помилка", "введіть назву палітри *поле вище*");
+        }
+    }else{
+        QMessageBox::information(this, "помилка", "щоб створити палітру потрібно зареєструватись.");
+    }
+}
+
+void MainWindow::on_pallete_load(Palitr *pallete)
+{
+    ui->colorlb_1->setStyleSheet(QString("background-color: %1;").arg(pallete->getColor(0).getCode()));
+    ui->namelbl_1->setText(pallete->getColor(0).getName());
+    ui->codelbl_1->setText(pallete->getColor(0).getCode());
+    colorArray[0].setCode(pallete->getColor(0).getCode());
+    colorArray[0].setName(pallete->getColor(0).getName());
+
+    ui->colorlbl_2->setStyleSheet(QString("background-color: %1;").arg(pallete->getColor(1).getCode()));
+    ui->namelbl_2->setText(pallete->getColor(1).getName());
+    ui->codelbl_2->setText(pallete->getColor(1).getCode());
+    colorArray[1].setCode(pallete->getColor(1).getCode());
+    colorArray[1].setName(pallete->getColor(1).getName());
+
+    ui->colorlbl_3->setStyleSheet(QString("background-color: %1;").arg(pallete->getColor(2).getCode()));
+    ui->namelbl_3->setText(pallete->getColor(2).getName());
+    ui->codelbl_3->setText(pallete->getColor(2).getCode());
+    colorArray[2].setCode(pallete->getColor(2).getCode());
+    colorArray[2].setName(pallete->getColor(2).getName());
+
+    ui->colorlbl_4->setStyleSheet(QString("background-color: %1;").arg(pallete->getColor(3).getCode()));
+    ui->namelbl_4->setText(pallete->getColor(3).getName());
+    ui->codelbl_4->setText(pallete->getColor(3).getCode());
+    colorArray[3].setCode(pallete->getColor(3).getCode());
+    colorArray[3].setName(pallete->getColor(3).getName());
+
+}
+
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    about->exec();
 }
 

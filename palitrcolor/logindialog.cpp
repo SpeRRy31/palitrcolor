@@ -26,11 +26,19 @@ void LoginDialog::on_pushButton_2_clicked()
 void LoginDialog::on_login_btn_clicked()
 {
 
-    qDebug() << "1l";
     if(!ui->password->text().isEmpty() && !ui->login_2->text().isEmpty()){
 
-        qDebug() << "2l";
-        user = new User(ui->login_2->text(), ui->password->text());
+        user_temp = new User(ui->login_2->text(), ui->password->text());
+        if (sign){
+            if (user->getLogin()==ui->login_2->text() && user->getPassword() == ui->password->text()){
+                emit loginAccount(user_temp);
+
+                this->close();
+            }
+        }
+
+
+
 
         /*for (int i = 0; i < userList.size(); ++i) {
             qDebug() << userList[i].getLogin();
@@ -44,7 +52,6 @@ void LoginDialog::on_login_btn_clicked()
             }
         }*/
 
-        qDebug() << "l4";
     }else{
         QMessageBox::critical(this, "помилка", "Поля не заповнені або заповнені не правильно.");
     }
@@ -61,8 +68,8 @@ void LoginDialog::on_pushButton_clicked()//зареєструватиась
         if(ui->passwordsign->text() == ui->password_sign->text()){
 
             qDebug() << "s3";
-            User(ui->login_sign->text(), ui->password_sign->text());
-            this->close();
+            user = new User(ui->login_sign->text(), ui->password_sign->text());
+            sign = true;
         }else{
 
             qDebug() << "s4";
@@ -72,4 +79,3 @@ void LoginDialog::on_pushButton_clicked()//зареєструватиась
         QMessageBox::critical(this, "помилка", "Поля не заповнені або заповнені не правильно.");
     }
 }
-
