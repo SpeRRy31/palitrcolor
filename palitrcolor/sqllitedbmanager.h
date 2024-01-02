@@ -57,6 +57,15 @@ public:
     bool inserIntoTable(const Palitr& palette) override;
     bool insertIntoTable(const PalitrColor& palitrcolor) override;
 
+    User* getUser(const QString& login) override;
+    bool userExists(const QString& login) override;
+
+    QVariant getLastInsertId() override;
+
+    virtual User* getUserById(int userId) override;
+    virtual Color* getColorById(int colorId) override;
+    virtual QVector<int> getColorIdsByPalitrId(int palitrId) override;
+
 
 private:
 

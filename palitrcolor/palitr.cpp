@@ -8,6 +8,12 @@ Palitr::Palitr(QString name, Color colors[], User* user)
     }
 }
 
+Palitr::Palitr(QString name, User *user)
+    : name(name), user(user)
+{
+
+}
+
 QString Palitr::getName() const{
     return name;
 }
@@ -25,6 +31,7 @@ Color Palitr::getColor(int index) {
 void Palitr::putColor(int index, Color *color)
 {
     if (index >= 0 && index < 4) {
+        colors[index].setID(color->getID());
         colors[index].setName(color->getName());
         colors[index].setCode(color->getCode());
     }

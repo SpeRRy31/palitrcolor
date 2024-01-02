@@ -200,7 +200,8 @@ bool SqliteDBManager::inserIntoTable(const Color& color) {
         return false;
     }
 }
-// Метод для вставки записів у таблицю Palitrs
+
+
 bool SqliteDBManager::inserIntoTable(const Palitr& palette) {
     QSqlQuery query;
 
@@ -226,7 +227,7 @@ bool SqliteDBManager::inserIntoTable(const Palitr& palette) {
     }
 }
 
-bool SqliteDBManager::insertIntoTable(const PalitrColor& palitrColor) {
+bool SqliteDBManager::insertIntoTable(const PalitrColor& palitrcolor) {
     QSqlQuery query;
 
     try {
@@ -234,8 +235,8 @@ bool SqliteDBManager::insertIntoTable(const PalitrColor& palitrColor) {
                       TABLE_PALITR_COLOR_PALITR_ID ", "
                       TABLE_PALITR_COLOR_COLOR_ID " ) "
                       "VALUES (:palitr_id, :color_id )");
-        query.bindValue(":palitr_id", palitrColor.getPalitrId());
-        query.bindValue(":color_id", palitrColor.getColorId());
+        query.bindValue(":palitr_id", palitrcolor.getPalitrId());
+        query.bindValue(":color_id", palitrcolor.getColorId());
 
         if (!query.exec()) {
             qDebug() << "Error insert into " << TABLE_PALITR_COLOR;
@@ -249,5 +250,110 @@ bool SqliteDBManager::insertIntoTable(const PalitrColor& palitrColor) {
         l.logError(e.what());
         return false;
     }
+}
+
+bool SqliteDBManager::userExists(const QString& login) {
+    QSqlQuery query;
+    query.prepare("SELECT COUNT(*) FROM " TABLE_USER " WHERE " TABLE_USER_LOGIN " = :login");
+    query.bindValue(":login", login);
+
+    if (query.exec() && query.next()) {
+        int count = query.value(0).toInt();
+        return count > 0;
+    } else {
+        qDebug() << "Error checking user existence: " << query.lastError().text();
+        return false;
+    }
+}
+
+User* SqliteDBManager::getUser(const QString& login) {
+    QSqlQuery query;
+    query.prepare("SELECT * FROM " TABLE_USER " WHERE " TABLE_USER_LOGIN " = :login");
+    query.bindValue(":login", login);
+
+    if (query.exec() && query.next()) {
+        int id = query.value(TABLE_USER_ID).toInt();
+        QString retrievedLogin = query.value(TABLE_USER_LOGIN).toString();
+        QString retrievedPassword = query.value(TABLE_USER_PASSWORD).toString();
+
+        User* user = new User(retrievedLogin, retrievedPassword);
+        user->setID(id);
+
+        return user;
+    } else {
+        qDebug() << "Error retrieving user: " << query.lastError().text();
+        return nullptr;
+    }
+}
+
+// Додайте в SqliteDBManager визначення функції
+QVariant SqliteDBManager::getLastInsertId() {
+    QSqlQuery query(db);
+    if (query.exec("SELECT last_insert_rowid();")) {
+        if (query.next()) {
+            return query.value(0);
+        }
+    }
+    return QVariant();
+}
+
+User* SqliteDBManager::getUserById(int userId) {
+    QSqlQuery query;
+    query.prepare("SELECT * FROM " TABLE_USER " WHERE " TABLE_USER_ID " = :userId");
+    query.bindValue(":userId", userId);
+
+    if (query.exec() && query.next()) {
+        int id = query.value(TABLE_USER_ID).toInt();
+        QString retrievedLogin = query.value(TABLE_USER_LOGIN).toString();
+        QString retrievedPassword = query.value(TABLE_USER_PASSWORD).toString();
+
+        User* user = new User(retrievedLogin, retrievedPassword);
+        user->setID(id);
+
+        return user;
+    } else {
+        qDebug() << "Error retrieving user by ID: " << query.lastError().text();
+        return nullptr;
+    }
+}
+
+Color* SqliteDBManager::getColorById(int colorId) {
+    QSqlQuery query;
+    query.prepare("SELECT * FROM " TABLE_COLOR " WHERE " TABLE_COLOR_ID " = :colorId");
+    query.bindValue(":colorId", colorId);
+
+    if (query.exec() && query.next()) {
+        int id = query.value(TABLE_COLOR_ID).toInt();
+        QString retrievedName = query.value(TABLE_COLOR_NAME).toString();
+        QString retrievedCode = query.value(TABLE_COLOR_CODE).toString();
+
+        Color* color = new Color(retrievedName, retrievedCode);
+        color->setID(id);
+
+        return color;
+    } else {
+        qDebug() << "Error retrieving color by ID: " << query.lastError().text();
+        return nullptr;
+    }
+}
+
+QVector<int> SqliteDBManager::getColorIdsByPalitrId(int palitrId) {
+    QSqlQuery query;
+    query.prepare("SELECT " TABLE_PALITR_COLOR_COLOR_ID " FROM " TABLE_PALITR_COLOR " WHERE " TABLE_PALITR_COLOR_PALITR_ID " = :palitrId");
+    query.bindValue(":palitrId", palitrId);
+
+    QVector<int> colorIds;
+
+    if (query.exec()) {
+        while (query.next()) {
+            int colorId = query.value(TABLE_PALITR_COLOR_COLOR_ID).toInt();
+            colorIds.append(colorId);
+            qDebug() << colorId << query.lastError().text();
+        }
+    } else {
+        qDebug() << "Error retrieving color IDs by palitr ID: " << query.lastError().text();
+    }
+
+    return colorIds;
 }
 

@@ -14,6 +14,8 @@ class Palitr
 public:
     Palitr(QString name, Color colors[], User* user);
 
+    Palitr(QString name, User* user);
+
     QString getName()const;
     Color getColor(int index);
     void putColor(int index, Color *color);

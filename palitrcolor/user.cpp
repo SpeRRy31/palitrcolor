@@ -20,3 +20,5 @@ void User::setID(int id)
 {
     this->id=id;
 }
+User::User(const User &other)
+    : id(other.id), login(other.login), password(other.password) {}

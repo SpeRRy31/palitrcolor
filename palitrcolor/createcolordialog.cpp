@@ -20,21 +20,15 @@ CreateColorDialog::~CreateColorDialog()
 
 void CreateColorDialog::on_nextbtn_clicked()
 {
-
-    if (!ui->colorname_edit->text().isEmpty()){
+    if (!ui->colorname_edit->text().isEmpty()) {
         QColorDialog colorDialog;
-
         colorDialog.exec();
         color = new Color(ui->colorname_edit->text(),  colorDialog.selectedColor().name());
-        emit createdColor(color);
-
+        emit createdColor(color, -1);  // -1 означає, що ID ще не визначено
         this->close();
-
-    }else{
+    } else {
         QMessageBox::critical(this, "помилка", "Введіть ім'я кольору, щоб вибрати #rrggbb");
     }
-
-
 }
 
 

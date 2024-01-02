@@ -42,7 +42,7 @@ private slots:
     void on_chosBtn_3_clicked();
     void on_chosBtn_4_clicked();
 
-    void on_createdColor(Color *color);
+    void on_createdColor(Color *color, int colorID);
 
     void on_regbtn_clicked();
     void on_login(User* user);
@@ -60,6 +60,7 @@ private slots:
 
 signals:
     void createdPallete(Palitr *pallete);
+    void userSend(User *user);
 
 private:
     Ui::MainWindow *ui;

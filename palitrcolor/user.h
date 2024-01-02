@@ -10,6 +10,7 @@ class User
     QString password;
 public:
     User(QString login, QString password);
+    User(const User &other);
 
     QString getLogin() const;
     QString getPassword() const;

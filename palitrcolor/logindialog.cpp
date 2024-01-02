@@ -5,11 +5,18 @@
 #include <QDebug>
 
 
-LoginDialog::LoginDialog(QWidget *parent)
+LoginDialog::LoginDialog(DBManager* dbManager, QWidget *parent)
     : QDialog(parent)
-    , ui(new Ui::LoginDialog)
+    , ui(new Ui::LoginDialog), dbManager(dbManager)
 {
     ui->setupUi(this);
+    if (!dbManager) {
+        qDebug() << "Неправильний вказівник DBManager у конструкторі DialogPrintSong";
+        // Обробте помилку, можливо, закрийте діалогове вікно або покажіть повідомлення про помилку
+        // в залежності від логіки вашого додатка.
+        return;
+    }
+
 }
 
 LoginDialog::~LoginDialog()
@@ -23,59 +30,60 @@ void LoginDialog::on_pushButton_2_clicked()
 }
 
 
-void LoginDialog::on_login_btn_clicked()
-{
-
-    if(!ui->password->text().isEmpty() && !ui->login_2->text().isEmpty()){
-
-        user_temp = new User(ui->login_2->text(), ui->password->text());
-        if (sign){
-            if (user->getLogin()==ui->login_2->text() && user->getPassword() == ui->password->text()){
-                emit loginAccount(user_temp);
-
-                this->close();
-            }
-        }
-
-
-
-
-        /*for (int i = 0; i < userList.size(); ++i) {
-            qDebug() << userList[i].getLogin();
-
-            if (user->getLogin() == userList[i].getLogin() && user->getPassword() == userList[i].getPassword()){
-                emit loginAccount(user);
-
-                qDebug() << "3l";
-            }else{
-                QMessageBox::critical(this, "помилка", "Логін або пароль невірні.");
-            }
-        }*/
-
-    }else{
-        QMessageBox::critical(this, "помилка", "Поля не заповнені або заповнені не правильно.");
-    }
-
-}
-
-
-void LoginDialog::on_pushButton_clicked()//зареєструватиась
-{
-    qDebug() << "s1";
-    if(!ui->password_sign->text().isEmpty() && !ui->login_sign->text().isEmpty() && !ui->passwordsign->text().isEmpty()){
-
-        qDebug() << "s2";
-        if(ui->passwordsign->text() == ui->password_sign->text()){
-
-            qDebug() << "s3";
-            user = new User(ui->login_sign->text(), ui->password_sign->text());
-            sign = true;
-        }else{
-
-            qDebug() << "s4";
-            QMessageBox::critical(this, "помилка", "Паролі не збігаються.");
-        }
-    }else{
-        QMessageBox::critical(this, "помилка", "Поля не заповнені або заповнені не правильно.");
+void LoginDialog::on_login_btn_clicked() {
+    if (!ui->password->text().isEmpty() && !ui->login_2->text().isEmpty()) {
+        checkLogin(ui->login_2->text(), ui->password->text());
+    } else {
+        QMessageBox::critical(this, "Помилка", "Поля не заповнені або заповнені не правильно.");
     }
 }
+
+void LoginDialog::on_pushButton_clicked() {
+    if (!ui->passwordsign->text().isEmpty() && !ui->login_sign->text().isEmpty() && !ui->password_sign->text().isEmpty()) {
+        if (ui->passwordsign->text() == ui->password_sign->text()) {
+            if (isLoginAvailable(ui->login_sign->text())) {
+                registerUser(ui->login_sign->text(), ui->password_sign->text());
+            } else {
+                QMessageBox::critical(this, "Помилка", "Користувач з таким логіном вже існує.");
+            }
+        } else {
+            QMessageBox::critical(this, "Помилка", "Паролі не збігаються.");
+        }
+    } else {
+        QMessageBox::critical(this, "Помилка", "Поля не заповнені або заповнені не правильно.");
+    }
+}
+
+
+void LoginDialog::registerUser(const QString &login, const QString &password) {
+    User newUser(login, password);
+    if (dbManager->inserIntoTable(newUser)) {
+        QMessageBox::information(this, "Успішна реєстрація", "Ви успішно зареєструвалися!");
+        clearRegistrationFields();
+    } else {
+        QMessageBox::critical(this, "Помилка", "Не вдалося зареєструвати користувача.");
+    }
+}
+
+void LoginDialog::clearRegistrationFields() {
+    ui->login_sign->clear();
+    ui->password_sign->clear();
+    ui->passwordsign->clear();
+}
+bool LoginDialog::isLoginAvailable(const QString &login) {
+    // Перевірка наявності користувача з таким логіном у базі даних
+    return !dbManager->userExists(login);
+}
+void LoginDialog::checkLogin(const QString &login, const QString &password) {
+    User *currentUser = dbManager->getUser(login);
+    if (currentUser && currentUser->getPassword() == password) {
+        qDebug() << "login";
+        emit loginAccount(currentUser);
+        this->close();
+    } else {
+        QMessageBox::critical(this, "Помилка", "Логін або пароль невірні.");
+    }
+}
+
+
+

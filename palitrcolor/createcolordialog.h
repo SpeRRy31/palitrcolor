@@ -14,7 +14,7 @@ class CreateColorDialog : public QDialog
     Q_OBJECT
 
 signals:
-    void createdColor(Color *color);
+    void createdColor(Color *color, int id);
 
 public:
     explicit CreateColorDialog(QWidget *parent = nullptr);

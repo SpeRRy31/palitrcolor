@@ -41,4 +41,4 @@ void Color::setFromColor(Color &other)
 }
 
 Color::Color(const Color& other)
-    : name(other.name), code(other.code){}
+    : id(other.id), name(other.name), code(other.code){}
