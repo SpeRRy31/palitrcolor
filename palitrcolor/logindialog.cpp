@@ -12,8 +12,6 @@ LoginDialog::LoginDialog(DBManager* dbManager, QWidget *parent)
     ui->setupUi(this);
     if (!dbManager) {
         qDebug() << "Неправильний вказівник DBManager у конструкторі DialogPrintSong";
-        // Обробте помилку, можливо, закрийте діалогове вікно або покажіть повідомлення про помилку
-        // в залежності від логіки вашого додатка.
         return;
     }
 
@@ -71,13 +69,13 @@ void LoginDialog::clearRegistrationFields() {
     ui->passwordsign->clear();
 }
 bool LoginDialog::isLoginAvailable(const QString &login) {
-    // Перевірка наявності користувача з таким логіном у базі даних
     return !dbManager->userExists(login);
 }
 void LoginDialog::checkLogin(const QString &login, const QString &password) {
     User *currentUser = dbManager->getUser(login);
     if (currentUser && currentUser->getPassword() == password) {
         qDebug() << "login";
+        ui->password->clear();
         emit loginAccount(currentUser);
         this->close();
     } else {

@@ -27,10 +27,10 @@ MainWindow::MainWindow(DBManager* dbManager, QWidget *parent)
     connect(loginDialog, &LoginDialog::loginAccount, this, &MainWindow::on_login);
 
     connect(this, &MainWindow::userSend, paletteList, &PaletteList::on_login);
-
-
     connect(paletteList, &PaletteList::palitrSelected, this, &MainWindow::on_pallete_load);
 
+    connect(this, &MainWindow::addColor, showColor, &ShowColorDialog::on_colorAdd);
+    connect(this, &MainWindow::createdPallete, paletteList, &PaletteList::on_palitrAdd);
 
     ui->colorlb_1->setStyleSheet(QString("background-color: #c1c1c1"));
     ui->colorlbl_2->setStyleSheet(QString("background-color: #c1c1c1"));
@@ -154,6 +154,8 @@ void MainWindow::on_createdColor(Color *color, int colorID)
     colorArray[changed-1].setName(color->getName());
     qDebug() << colorArray[changed-1].getID();
     qDebug() << colorArray[changed-1].colorToString();
+
+    emit addColor();
 }
 
 
@@ -193,12 +195,15 @@ void MainWindow::on_savebtn_clicked()
     if (login){
         if (!ui->palletename->text().isEmpty()){
             palette = new Palitr(ui->palletename->text(), colorArray, current_user);
-            emit createdPallete(palette);
+
 
             // Зберегти палітру в базі даних
 
 
             if (dbManager->inserIntoTable(*palette)) {
+
+                qDebug() << "відправляю сигнал (палітру створюю)";
+                emit createdPallete();
                 QVariant newPalleteIDVariant = dbManager->getLastInsertId();
 
                 // Перевірка, чи значення отримано успішно та конвертуємо його в int

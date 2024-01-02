@@ -59,8 +59,9 @@ private slots:
     void on_pushButton_2_clicked();
 
 signals:
-    void createdPallete(Palitr *pallete);
+    void createdPallete();
     void userSend(User *user);
+    void addColor();
 
 private:
     Ui::MainWindow *ui;

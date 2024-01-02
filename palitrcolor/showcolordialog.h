@@ -33,6 +33,9 @@ signals:
     void chosColor(Color *color, int id);
 
 
+public slots:
+    void on_colorAdd();
+
 private slots:
 
     void on_close_clicked();

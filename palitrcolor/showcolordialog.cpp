@@ -39,6 +39,11 @@ ShowColorDialog::~ShowColorDialog()
     delete ui;
 }
 
+void ShowColorDialog::on_colorAdd()
+{
+    model->select();
+}
+
 
 
 void ShowColorDialog::setupModel(const QString &tableName, const QStringList &headers)
@@ -87,10 +92,9 @@ void ShowColorDialog::on_tableView_clicked(const QModelIndex &index)
 
 Color* ShowColorDialog::getColorFromRow(int row) {
     Color *color = new Color();
-    color->setID(model->data(model->index(row, 0)).toInt());  // Отримати ID
+    color->setID(model->data(model->index(row, 0)).toInt());
     color->setName(model->data(model->index(row, 1)).toString());
     color->setCode(model->data(model->index(row, 2)).toString());
-    // Ваш код для отримання інших даних колірів
     return color;
 }
 

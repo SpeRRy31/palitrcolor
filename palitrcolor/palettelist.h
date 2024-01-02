@@ -27,6 +27,7 @@ public:
 
 public slots:
     void on_login(User *user);
+    void on_palitrAdd();
 
 signals:
     void palitrSelected(Palitr *palitr);

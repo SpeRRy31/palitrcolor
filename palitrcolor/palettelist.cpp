@@ -46,27 +46,33 @@ void PaletteList::on_login(User *user)
     this->createUI();
 }
 
+void PaletteList::on_palitrAdd()
+{
+    qDebug() << "прийняв сигнал (палітру створюю)";
+    model->select();
+    ui->tableView->viewport()->update();
+    qDebug() << "оновив таблицю"
+                "(палітру створюю)";
+}
+
 
 void PaletteList::setupModel(const QString &tableName, const QStringList &headers)
 {
     model = new QSqlTableModel(this, dbManager->getDB());
     model->setTable(tableName);
 
-    // Встановлюємо назви стовпців в таблиці із сортуванням даних
     for (int i = 0, j = 0; i < model->columnCount(); i++, j++) {
         model->setHeaderData(i, Qt::Horizontal, headers[j]);
     }
 
-    // Встановлюємо сортування по збільшенню даних по нульовому стовпцю
     model->setSort(0, Qt::AscendingOrder);
 
-    // Додаємо фільтр, щоб показувати лише рядки з поточним користувачем
     if (current_user) {
         qDebug() << current_user->getID();
         QString filter = QString("user_id = %1").arg(current_user->getID());
         model->setFilter(filter);
     }
-    // Оновлюємо модель
+
     model->select();
 }
 
@@ -97,44 +103,27 @@ void PaletteList::on_tableView_clicked(const QModelIndex &index)
 {
     if (index.isValid()) {
         try {
-            qDebug() << "click";
-
-            // Отримуємо значення з вибраного рядка
             int id = model->data(model->index(index.row(), 0)).toInt();
             QString name = model->data(model->index(index.row(), 1)).toString();
             int userId = model->data(model->index(index.row(), 2)).toInt();
 
-            qDebug() << "step 1";
-
-            // Отримуємо користувача, який є власником цієї палітри
             User* owner = dbManager->getUserById(userId);
 
-            qDebug() << "get user";
-
-            // Створюємо об'єкт палітри
             selectedPalitr = new Palitr(name, owner);
             selectedPalitr->setID(id);
 
-            qDebug() << "palitr created";
-
-            // Отримуємо масив color_id за palitr_id
             QVector<int> colorIds = dbManager->getColorIdsByPalitrId(id);
 
-            qDebug() << "маємо масив";
+            qDebug() << "палітра завантажена";
             qDebug() << selectedPalitr->getID();
             qDebug() << selectedPalitr->getName();
             qDebug() << selectedPalitr->getUser()->getLogin();
 
-            // Заповнюємо палітру кольорами
             for (int i = 0; i < qMin(colorIds.size(), 4); ++i) {
-                // Отримуємо об'єкт Color за його ідентифікатором
                 Color* color = dbManager->getColorById(colorIds[i]);
 
-                qDebug() << "колір отримано";
 
-                // Перевіряємо, чи отримали ми дійсний колір
                 if (color) {
-                    // Додаємо колір до палітри
                     selectedPalitr->putColor(i, color);
 
                     qDebug() << selectedPalitr->getColor(i).colorToString();
@@ -143,9 +132,7 @@ void PaletteList::on_tableView_clicked(const QModelIndex &index)
                 }
             }
 
-            qDebug() << "сигнал відправлено";
 
-            // Відправляємо сигнал із вибраною палітрою
             emit palitrSelected(selectedPalitr);
         } catch (const std::exception &e) {
             qDebug() << "Виняток під час обробки події: " << e.what();

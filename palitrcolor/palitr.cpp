@@ -22,9 +22,7 @@ Color Palitr::getColor(int index) {
     if (index >= 0 && index < 4) {
         return colors[index];
     } else {
-        // Обробка помилки або можливо повернення за замовчуванням
-        // (залежить від ваших потреб)
-        return Color();  // Повернення порожнього кольору як за замовчуванням
+        return Color();
     }
 }
 
