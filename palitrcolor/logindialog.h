@@ -36,7 +36,6 @@ private:
 
     bool sign = false;
     User *user_temp;
-    User *user;
 
     void registerUser(const QString &login, const QString &password);
     void clearRegistrationFields();

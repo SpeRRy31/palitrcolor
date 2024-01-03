@@ -182,6 +182,8 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_loadbtn_clicked()
 {
+
+    emit createdPallete();
     if (login){
         paletteList->exec();
     }else{
