@@ -31,11 +31,7 @@ PaletteList::~PaletteList()
 
 void PaletteList::on_login(User *user)
 {
-    if (current_user) {
-        delete current_user;
-    }
-    current_user = new User(*user);
-    this->createUI();
+    setFilter(user);
 }
 
 void PaletteList::on_palitrAdd()
@@ -58,12 +54,6 @@ void PaletteList::setupModel(const QString &tableName, const QStringList &header
     }
 
     model->setSort(0, Qt::AscendingOrder);
-
-    if (current_user) {
-        qDebug() << current_user->getID();
-        QString filter = QString("user_id = %1").arg(current_user->getID());
-        model->setFilter(filter);
-    }
 
     model->select();
 }
@@ -89,7 +79,6 @@ void PaletteList::on_close_clicked()
 {
     this->close();
 }
-
 
 void PaletteList::on_tableView_clicked(const QModelIndex &index)
 {
@@ -134,3 +123,13 @@ void PaletteList::on_tableView_clicked(const QModelIndex &index)
     }
 }
 
+void PaletteList::setFilter(User *user)
+{
+    qDebug() << "для виведення користувача з ід: " << user->getID();
+    QString filter = QString("user_id = %1").arg(user->getID());
+    qDebug() << filter;
+    model->setFilter(filter);
+
+    model->select();
+    this->createUI();
+}
