@@ -3,20 +3,17 @@
 
 class PalitrColor {
 public:
-    PalitrColor() : id(-1), palitr_id(-1), color_id(-1) {}  // Конструктор за замовчуванням
+    PalitrColor();
 
-    PalitrColor(int id, int palitr_id, int color_id)
-        : id(id), palitr_id(palitr_id), color_id(color_id) {}  // Параметризований конструктор
+    PalitrColor(int id, int palitr_id, int color_id);
 
-    // Гетери
-    int getId() const { return id; }
-    int getPalitrId() const { return palitr_id; }
-    int getColorId() const { return color_id; }
+    int getId() const;
+    int getPalitrId() const;
+    int getColorId() const;
 
-    // Сетери
-    void setId(int newId) { id = newId; }
-    void setPalitrId(int newPalitrId) { palitr_id = newPalitrId; }
-    void setColorId(int newColorId) { color_id = newColorId; }
+    void setId(int newId);
+    void setPalitrId(int newPalitrId);
+    void setColorId(int newColorId);
 
 private:
     int id;
