@@ -40,12 +40,12 @@ private slots:
 private:
     Ui::PaletteList *ui;
 
-    User *current_user;
-
     DBManager* dbManager;
     QSqlTableModel* model;
 
     Palitr *selectedPalitr;
+
+    void setFilter(User *user);
 
     void setupModel(const QString& tableName, const QStringList& headers);
     void createUI();
