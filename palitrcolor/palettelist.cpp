@@ -35,14 +35,6 @@ void PaletteList::on_login(User *user)
         delete current_user;
     }
     current_user = new User(*user);
-
-    this->setupModel(TABLE_PALITR ,
-                     QStringList() << tr("id")
-                                   << tr("name")
-                                   << tr("user_id")
-                     );
-
-    model->select();
     this->createUI();
 }
 
