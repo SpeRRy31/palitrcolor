@@ -1,6 +1,8 @@
 #include "logindialog.h"
 #include "ui_logindialog.h"
 
+#include <QCryptographicHash>
+
 #include <QMessageBox>
 #include <QDebug>
 
@@ -54,7 +56,8 @@ void LoginDialog::on_pushButton_clicked() {
 
 
 void LoginDialog::registerUser(const QString &login, const QString &password) {
-    User newUser(login, password);
+    User newUser(login,
+                 QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha256).toHex());
     if (dbManager->inserIntoTable(newUser)) {
         QMessageBox::information(this, "Успішна реєстрація", "Ви успішно зареєструвалися!");
         clearRegistrationFields();
@@ -73,7 +76,9 @@ bool LoginDialog::isLoginAvailable(const QString &login) {
 }
 void LoginDialog::checkLogin(const QString &login, const QString &password) {
     User *currentUser = dbManager->getUser(login);
-    if (currentUser && currentUser->getPassword() == password) {
+    if (currentUser
+        && currentUser->getPassword()
+               == QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha256).toHex()) {
         qDebug() << "login";
         ui->password->clear();
         emit loginAccount(currentUser);
