@@ -15,9 +15,9 @@ macx:OBJECTS_DIR = mac
 
 #If release-buid -> run windeploy applications, that will collect all the dlls
 
-#CONFIG(release, debug|release) {
-#    win32:QMAKE_POST_LINK = $$(QTDIR)/bin/windeployqt $$OUT_PWD/release
-#}
+CONFIG(release, debug|release) {
+    win32:QMAKE_POST_LINK = $$(QTDIR)/bin/windeployqt $$OUT_PWD/release
+}
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -35,6 +35,7 @@ SOURCES += \
     mainwindow.cpp \
     palettelist.cpp \
     palitr.cpp \
+    palitrcolor.cpp \
     showcolordialog.cpp \
     sqllitedbmanager.cpp \
     user.cpp
